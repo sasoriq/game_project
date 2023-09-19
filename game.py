@@ -26,6 +26,8 @@ class Game:
                     else:
                         self.tile = Tile((x * self.tmx_data.tilewidth, y * self.tmx_data.tileheight), tile, self.visible_group)
 
+
+
     def initialize_game(self):
         pg.init()
 
@@ -34,8 +36,7 @@ class Game:
             self.handle_input()
             self.process_game_logic()
             self.obstacle_group.draw(self.screen)
-            if pg.sprite.spritecollide(self.player, self.obstacle_group, True, pg.sprite.collide_mask):
-                print('hit')
+            self.player.set_collision()
             self.draw()
             self.clock.tick(FPS)
 

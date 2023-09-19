@@ -19,7 +19,7 @@ class Player(pg.sprite.Sprite):
 
     def draw(self):
         self.screen.blit(self.image, self.rect)
-        self.screen.blit(self.mask_image, (0, 0))
+        # self.screen.blit(self.mask_image, (0, 0))
 
     def handle_player_input(self):
         keys = pg.key.get_pressed()
@@ -42,6 +42,15 @@ class Player(pg.sprite.Sprite):
             self.rect.x += direction.x * self.speed
             self.rect.y += direction.y * self.speed
 
-
-
+    def set_collision(self):
+        for sprite in self.obstacle_group:
+            if sprite.rect.colliderect(self.rect):
+                if self.direction == pg.math.Vector2(self.directions['up']):
+                    self.rect.top = sprite.rect.bottom
+                if self.direction == pg.math.Vector2(self.directions['down']):
+                    self.rect.bottom = sprite.rect.top
+                if self.direction == pg.math.Vector2(self.directions['left']):
+                    self.rect.left = sprite.rect.right
+                if self.direction == pg.math.Vector2(self.directions['right']):
+                    self.rect.right = sprite.rect.left
 
