@@ -1,3 +1,4 @@
+import pygame as pg
 from settings import *
 
 
@@ -63,6 +64,7 @@ class Player(pg.sprite.Sprite):
             self.status = 'right'
         elif self.direction == pg.math.Vector2(self.directions['left']):
             self.status = 'left'
+
 
     def run(self, direction):
         if direction.magnitude() != 0:

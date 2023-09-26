@@ -2,10 +2,10 @@ import sys
 import os.path as op
 import pytmx
 from tile import *
-from player import *
 from weapon import *
 from enemy import *
 from ui import *
+from player import *
 
 
 class Game:
@@ -50,7 +50,6 @@ class Game:
     def main_loop(self):
         while True:
             self.handle_input()
-            self.process_game_logic()
             self.draw()
             self.clock.tick(FPS)
 
@@ -65,7 +64,6 @@ class Game:
                     self.player.set_collision(sprite)
             enemy_hits = pg.sprite.groupcollide(self.weapon_group, self.enemy_group, False, False, pg.sprite.collide_mask)
             if enemy_hits:
-                # print(self.enemy.getting_damage)
                 self.enemy.visible = False
                 for sprite in self.enemy_group:
                     damage = self.player.set_damage()
@@ -75,12 +73,6 @@ class Game:
                         sprite.damage_time = pg.time.get_ticks()
                         print(sprite.health)
                     print(self.bullets)
-            # for sprite in self.enemy_group:
-            #     sprite.move_after_player(self.player)
-
-
-    def process_game_logic(self):
-        pass
 
     def create_weapon(self):
         path = 'assets/graphics/weapons/lance/'
@@ -96,7 +88,6 @@ class Game:
         self.obstacle_group.draw(self.screen)
         self.visible_group.draw(self.screen)
         self.weapon_group.draw(self.screen)
-
 
         for sprite in self.enemy_group:
             sprite.draw()
