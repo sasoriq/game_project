@@ -36,7 +36,7 @@ class Enemy(pg.sprite.Sprite):
 
         self.attacking = False
         self.attack_time = pg.time.get_ticks()
-        self.attack_cooldown = 400
+        self.attack_cooldown = 2000
 
     def draw(self):
         if self.visible:
@@ -76,19 +76,25 @@ class Enemy(pg.sprite.Sprite):
                 self.shoot(direction)
             # print(self.shoot)
 
-    def shoot(self, direction):
-        BULLET_SPEED = 5
-        bullet_x = direction[0] * BULLET_SPEED
-        bullet_y = direction[1] * BULLET_SPEED
+    def shoot(self, direction, distance):
+        # normalization (cause of different bullet speed)
+        if distance == 0.0:
+            direction = (0, -1)
+        else:
+            direction = (direction[0] / distance, direction[1] / distance)
         bullet = Bullet(self.rect, direction)
-        self.create_bullet_callback(bullet)
+        if not self.attacking:
+            self.attacking = True
+            self.attack_time = pg.time.get_ticks()
+            self.create_bullet_callback(bullet)
 
 
     def update(self, player):
         self.set_damage_cooldown()
         distance = self.get_direction_distance(player)[0]
         direction = self.get_direction_distance(player)[1]
-        self.move_after_player(distance, direction)
+        # self.move_after_player(distance, direction)
+        self.shoot(direction, distance)
         if not self.visible:
             self.blink_timer = pg.time.get_ticks()
             if self.blink_timer >= self.blink_duration:

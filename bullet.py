@@ -11,11 +11,13 @@ class Bullet(pg.sprite.Sprite):
         self.image = pg.Surface((10, 10))
         self.image.fill((0, 0, 0))
         self.rect = self.image.get_rect(center=(self.x, self.y))
+        self.speed = 5
 
     def draw(self):
         self.screen.blit(self.image, self.rect)
 
     def move(self):
-        # self.rect += self.velocity
-        self.rect.move_ip(self.velocity)
+        # self.rect.move_ip(self.velocity * self.speed)
+        self.rect.x += self.velocity[0] * self.speed
+        self.rect.y += self.velocity[1] * self.speed
 

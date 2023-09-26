@@ -110,6 +110,7 @@ class Game:
         self.enemy_self_bar.update()
 
         pg.display.flip()
+        self.clock.tick(60)
 
 
 if __name__ == '__main__':
